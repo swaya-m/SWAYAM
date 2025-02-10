@@ -3,19 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini SMS App</title>
+    <title>English Dictionary</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="sms-container">
-        <h1>Mini SMS App</h1>
-        <div id="chat-window" class="chat-window">
-            <!-- Messages will appear here -->
+    <div class="container">
+        <h1 class="title">📖 English Dictionary</h1>
+        <div class="search-box">
+            <input type="text" id="searchWord" placeholder="Enter a word..." autocomplete="off">
+            <button onclick="searchWord()">🔍 Search</button>
         </div>
-        <input type="text" id="message-input" class="message-input" placeholder="Type a message..." />
-        <button id="send-button" class="send-button">Send</button>
-    </div>
+        <div class="result">
+            <h2 id="word"></h2>
+            <p id="definition"></p>
+            
+            <!-- Modified Pronunciation Section -->
+            <div class="audio-section" id="audioSection" style="display: none;">
+                <button id="playAudio">
+                    🔊 Pronounce
+                </button>
+            </div>
 
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
