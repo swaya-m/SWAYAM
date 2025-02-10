@@ -1,59 +1,44 @@
-// Get references to DOM elements
-const sendButton = document.getElementById("send-button");
-const messageInput = document.getElementById("message-input");
-const chatWindow = document.getElementById("chat-window");
+function searchWord() {
+    let word = document.getElementById("searchWord").value.trim();
+    let wordElement = document.getElementById("word");
+    let definitionElement = document.getElementById("definition");
+    let resultBox = document.querySelector(".result");
+    let audioSection = document.getElementById("audioSection");
+    let playButton = document.getElementById("playAudio");
 
-// Function to append messages to the chat window
-function appendMessage(message, sender) {
-    const messageElement = document.createElement("div");
-    messageElement.classList.add("message");
-
-    if (sender === "user") {
-        messageElement.classList.add("user-message");
-        messageElement.textContent = `You: ${message}`;
-    } else {
-        messageElement.classList.add("receiver-message");
-        messageElement.textContent = `Receiver: ${message}`;
+    if (word === "") {
+        alert("Please enter a word!");
+        return;
     }
 
-    chatWindow.appendChild(messageElement);
-    chatWindow.scrollTop = chatWindow.scrollHeight; // Auto-scroll to the latest message
-}
-
-// Function to send a message
-function sendMessage() {
-    const message = messageInput.value.trim();
-    
-    if (message !== "") {
-        appendMessage(message, "user");
-        messageInput.value = ""; // Clear input field
-
-        // Simulate a response from an AI chatbot
-        setTimeout(() => {
-            fetchAIResponse(message);
-        }, 1000);
-    }
-}
-
-// Function to fetch AI-generated response
-function fetchAIResponse(userMessage) {
-    fetch("https://api.mymemory.translated.net/get?q=" + encodeURIComponent(userMessage) + "&langpair=en|en") 
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
         .then(response => response.json())
         .then(data => {
-            const botResponse = data.responseData.translatedText;
-            appendMessage(botResponse, "receiver");
+            if (data.title) {
+                wordElement.innerText = "Word not found!";
+                definitionElement.innerText = "";
+                audioSection.style.display = "none";
+            } else {
+                wordElement.innerText = data[0].word;
+                definitionElement.innerText = data[0].meanings[0].definitions[0].definition;
+
+                // Audio pronunciation
+                let audioSrc = data[0].phonetics.find(p => p.audio)?.audio;
+                if (audioSrc) {
+                    audioSection.style.display = "flex";
+                    playButton.onclick = () => {
+                        let audio = new Audio(audioSrc);
+                        audio.play();
+                    };
+                } else {
+                    audioSection.style.display = "none";
+                }
+            }
+            resultBox.classList.add("show");
         })
         .catch(() => {
-            appendMessage("Sorry, I couldn't understand that.", "receiver");
+            wordElement.innerText = "Error fetching data!";
+            definitionElement.innerText = "";
+            audioSection.style.display = "none";
         });
 }
-
-// Event listener for the Send button
-sendButton.addEventListener("click", sendMessage);
-
-// Allow sending messages by pressing Enter key
-messageInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
-});
