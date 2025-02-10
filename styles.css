@@ -1,81 +1,116 @@
-/* Basic styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.7) 60%),  
+                linear-gradient(135deg, #ff9966, #ff5e62);
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    transition: background 0.5s ease-in-out;
 }
 
-.sms-container {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 350px;
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     text-align: center;
+    width: 350px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
 }
 
-h1 {
+.container:hover {
+    transform: scale(1.05);
+}
+
+/* Title */
+.title {
+    color: #333;
     font-size: 24px;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.6);
+}
+
+/* Search Box */
+.search-box {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
-.chat-window {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    height: 300px;
-    width: 100%;
-    overflow-y: scroll;
-    padding: 10px;
-    background-color: #f9f9f9;
-    margin-bottom: 15px;
-}
-
-.message-input {
-    width: 80%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
+input {
+    width: 70%;
+    padding: 8px;
+    border: 2px solid #007bff;
     border-radius: 5px;
+    outline: none;
 }
 
-.send-button {
-    width: 15%;
-    padding: 10px;
-    background-color: #4CAF50;
+button {
+    padding: 8px 15px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Result Box */
+.result {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.result.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Word & Definition */
+h2 {
+    color: #007bff;
+    font-size: 22px;
+}
+
+p {
+    color: #555;
+    font-size: 18px;
+}
+
+/* Pronunciation Button */
+.audio-section {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.audio-section button {
+    background: #ff6600;
     color: white;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 8px 15px;
     font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0px 4px 10px rgba(255, 102, 0, 0.5);
 }
 
-.send-button:hover {
-    background-color: #45a049;
-}
-
-.message {
-    padding: 10px;
-    border-radius: 5px;
-    margin: 10px 0;
-    max-width: 80%;
-}
-
-.user-message {
-    background-color: #DCF8C6;
-    align-self: flex-end;
-}
-
-.receiver-message {
-    background-color: #F1F1F1;
-    align-self: flex-start;
-}
-
-.chat-window {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+.audio-section button:hover {
+    background: #e65c00;
+    transform: scale(1.1);
 }
